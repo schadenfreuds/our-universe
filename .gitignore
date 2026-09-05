@@ -22,7 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# Uploaded user photos
-public/photos/*
-!public/photos/.gitkeep
