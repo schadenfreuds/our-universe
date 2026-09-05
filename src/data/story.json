@@ -5,7 +5,9 @@
     "partnerName": "Me",
     "creatorName": "You",
     "startDate": "2024-09-07T00:00:00",
-    "anniversaryPassword": "0709",
+    "anniversaryPassword": "Caffe Greco",
+    "vaultDescription": "Burası sadece ikimize özel. Fotoğrafları ve anıları görebilmek için Roma'da ilk kahvemizi içtiğimiz kafenin adını gir sevgilim...",
+    "vaultPlaceholder": "Örn: Caffe Greco",
     "secretPin": "0411",
     "musicUrl": "/music/background.mp3",
     "language": "tr"

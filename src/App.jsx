@@ -63,11 +63,13 @@ export default function App() {
             t={t}
           />
 
-          {/* Locked/Protected Zaman Tüneli (Requires Anniversary Date) */}
+          {/* Locked/Protected Zaman Tüneli */}
           <PolaroidGallery 
             id="timeline"
             memories={story.memories} 
-            anniversaryPassword={story.general?.anniversaryPassword || "0709"}
+            anniversaryPassword={story.general?.anniversaryPassword || "Caffe Greco"}
+            vaultDescription={story.general?.vaultDescription}
+            vaultPlaceholder={story.general?.vaultPlaceholder}
             t={t}
           />
         </main>

@@ -2,38 +2,62 @@ import React, { useState } from 'react'
 import { Calendar, MapPin, X, Heart, Eye, Sparkles, Lock, Key, Unlock } from 'lucide-react'
 import confetti from 'canvas-confetti'
 
-export default function PolaroidGallery({ memories = [], id = "timeline", anniversaryPassword = "0709", t }) {
+export default function PolaroidGallery({ 
+  memories = [], 
+  id = "timeline", 
+  anniversaryPassword = "Caffe Greco", 
+  vaultDescription,
+  vaultPlaceholder,
+  t 
+}) {
   const [activeItem, setActiveItem] = useState(null)
   const [isUnlocked, setIsUnlocked] = useState(false)
   const [inputDate, setInputDate] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
 
-  // Flexible date validator
+  // Flexible validator: handles text phrases, cafe names, or dates seamlessly
   const handleUnlock = (e) => {
     e.preventDefault()
     setErrorMsg('')
 
-    // Normalize inputs: remove dots, slashes, spaces, dashes
-    const cleanInput = inputDate.replace(/[^0-9]/g, '')
-    const cleanTarget = (anniversaryPassword || '0709').replace(/[^0-9]/g, '')
+    const targetAnswer = (anniversaryPassword || 'Caffe Greco').trim().toLowerCase()
+    const userInput = inputDate.trim().toLowerCase()
 
-    // Check if input matches '0709' or '07092024' or starts with '0709'
-    const isMatch = cleanInput === cleanTarget || 
-                    cleanInput === '0709' || 
-                    cleanInput === '07092024' || 
-                    cleanInput === '070924' ||
-                    cleanInput.startsWith(cleanTarget)
-
-    if (isMatch) {
+    const triggerSuccess = () => {
       confetti({
         particleCount: 50,
         spread: 70,
         origin: { y: 0.6 }
       })
       setIsUnlocked(true)
-    } else {
-      setErrorMsg(t?.wrongDateMsg || 'Hmm, bu tarih doğru değil sevgilim. Tekrar dene ❤️')
     }
+
+    // 1. Direct match (case-insensitive)
+    if (userInput === targetAnswer) {
+      triggerSuccess()
+      return
+    }
+
+    // 2. Normalize alphanumeric (e.g. "caffegreco" === "caffe greco")
+    const cleanUser = userInput.replace(/[^a-z0-9ğüşıöç]/gi, '')
+    const cleanTarget = targetAnswer.replace(/[^a-z0-9ğüşıöç]/gi, '')
+    if (cleanUser && cleanTarget && cleanUser === cleanTarget) {
+      triggerSuccess()
+      return
+    }
+
+    // 3. Fallback for date formats if target or input is numeric (e.g. 0709, 07.09)
+    const cleanNumUser = userInput.replace(/[^0-9]/g, '')
+    const cleanNumTarget = targetAnswer.replace(/[^0-9]/g, '')
+    if (cleanNumTarget && cleanNumUser && (
+      cleanNumUser === cleanNumTarget ||
+      cleanNumUser.startsWith(cleanNumTarget)
+    )) {
+      triggerSuccess()
+      return
+    }
+
+    setErrorMsg(t?.wrongAnswerMsg || t?.wrongDateMsg || 'Hmm, bu cevap doğru değil sevgilim. Tekrar dene ❤️')
   }
 
   const handleLock = () => {
@@ -69,7 +93,7 @@ export default function PolaroidGallery({ memories = [], id = "timeline", annive
           </h3>
 
           <p className="text-slate-300 text-xs sm:text-sm font-light leading-relaxed mb-6">
-            {t?.lockedDesc || "Burası sadece ikimize özel. Fotoğrafları ve anıları görebilmek için yıldönümümüzü gir sevgilim..."}
+            {vaultDescription || t?.lockedDesc}
           </p>
 
           <form onSubmit={handleUnlock} className="space-y-3">
@@ -78,7 +102,7 @@ export default function PolaroidGallery({ memories = [], id = "timeline", annive
                 type="text"
                 value={inputDate}
                 onChange={(e) => setInputDate(e.target.value)}
-                placeholder={t?.inputPlaceholder || "Örn: 07.09 veya 07092024"}
+                placeholder={vaultPlaceholder || t?.inputPlaceholder}
                 className="w-full bg-black/50 border border-white/20 px-4 py-3 text-center text-base sm:text-lg font-mono text-white rounded-2xl focus:outline-rose-500 placeholder:text-slate-500 transition-all"
               />
               <Key size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />

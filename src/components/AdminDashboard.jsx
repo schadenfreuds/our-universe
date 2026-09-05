@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { X, Save, Download, Plus, Trash2, Upload, Key, Image as ImageIcon, Settings } from 'lucide-react'
+import { X, Save, Download, Plus, Trash2, Upload, Key, Image as ImageIcon, Settings, Shield, Lock } from 'lucide-react'
 import { translations } from '../locales/translations'
 
 export default function AdminDashboard({ isOpen, onClose, story, onSaveStory }) {
@@ -198,18 +198,24 @@ export default function AdminDashboard({ isOpen, onClose, story, onSaveStory }) 
           /* Authenticated Form */
           <div className="flex-1 flex flex-col overflow-hidden">
             {/* Tabs */}
-            <div className="flex gap-2 border-b border-white/10 pb-2 mb-4 text-xs font-semibold">
+            <div className="flex gap-2 border-b border-white/10 pb-2 mb-4 text-xs font-semibold overflow-x-auto">
               <button
                 onClick={() => setActiveTab('general')}
-                className={`px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer ${activeTab === 'general' ? 'bg-rose-500/20 text-rose-400 font-bold border border-rose-500/30' : 'text-slate-400 hover:bg-white/5'}`}
+                className={`px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'general' ? 'bg-rose-500/20 text-rose-400 font-bold border border-rose-500/30' : 'text-slate-400 hover:bg-white/5'}`}
               >
                 <Settings size={15} /> {adm.tabGeneral}
               </button>
               <button
                 onClick={() => setActiveTab('memories')}
-                className={`px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer ${activeTab === 'memories' ? 'bg-rose-500/20 text-rose-400 font-bold border border-rose-500/30' : 'text-slate-400 hover:bg-white/5'}`}
+                className={`px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'memories' ? 'bg-rose-500/20 text-rose-400 font-bold border border-rose-500/30' : 'text-slate-400 hover:bg-white/5'}`}
               >
                 <ImageIcon size={15} /> {adm.tabMemories} ({formData.memories?.length || 0})
+              </button>
+              <button
+                onClick={() => setActiveTab('security')}
+                className={`px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer whitespace-nowrap ${activeTab === 'security' ? 'bg-rose-500/20 text-rose-400 font-bold border border-rose-500/30' : 'text-slate-400 hover:bg-white/5'}`}
+              >
+                <Shield size={15} /> {adm.tabSecurity || "Güvenlik & Kasa"}
               </button>
             </div>
 
@@ -277,7 +283,7 @@ export default function AdminDashboard({ isOpen, onClose, story, onSaveStory }) 
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <label className="text-xs font-semibold text-slate-300 block mb-1">{adm.startDateLabel}</label>
                       <input
@@ -288,34 +294,94 @@ export default function AdminDashboard({ isOpen, onClose, story, onSaveStory }) 
                       />
                     </div>
                     <div>
-                      <label className="text-xs font-semibold text-rose-400 block mb-1">{adm.anniversaryLabel}</label>
+                      <label className="text-xs font-semibold text-slate-300 block mb-1">{adm.musicLabel}</label>
                       <input
                         type="text"
-                        value={formData.general.anniversaryPassword || "0709"}
-                        onChange={e => setFormData({ ...formData, general: { ...formData.general, anniversaryPassword: e.target.value } })}
-                        placeholder={adm.anniversaryPlaceholder}
-                        className="w-full p-2.5 bg-rose-500/10 border border-rose-500/30 text-xs rounded-lg text-rose-300 font-mono font-bold"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-xs font-semibold text-slate-300 block mb-1">{adm.adminPinLabel}</label>
-                      <input
-                        type="text"
-                        value={formData.general.secretPin}
-                        onChange={e => setFormData({ ...formData, general: { ...formData.general, secretPin: e.target.value } })}
+                        value={formData.general.musicUrl}
+                        onChange={e => setFormData({ ...formData, general: { ...formData.general, musicUrl: e.target.value } })}
                         className="w-full p-2.5 bg-black/40 border border-white/15 text-xs rounded-lg text-white font-mono"
                       />
                     </div>
                   </div>
+                </div>
+              )}
 
+              {/* TAB: SECURITY & VAULT PROTECTION */}
+              {activeTab === 'security' && (
+                <div className="space-y-4 bg-white/5 p-4 border border-white/10 rounded-xl">
+                  <div className="border-b border-white/10 pb-2.5">
+                    <h4 className="text-sm font-bold text-white flex items-center gap-2">
+                      <Lock size={16} className="text-rose-400" />
+                      {adm.tabSecurity || "Güvenlik & Kasa"}
+                    </h4>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      {adm.vaultDescHint}
+                    </p>
+                  </div>
+
+                  {/* 1. Kilit Açıklama Metni (Soru) */}
                   <div>
-                    <label className="text-xs font-semibold text-slate-300 block mb-1">{adm.musicLabel}</label>
+                    <label className="text-xs font-semibold text-rose-400 block mb-1">
+                      {adm.vaultDescLabel}
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={formData.general.vaultDescription || ""}
+                      onChange={e => setFormData({ ...formData, general: { ...formData.general, vaultDescription: e.target.value } })}
+                      placeholder="Burası sadece ikimize özel. Fotoğrafları ve anıları görebilmek için..."
+                      className="w-full p-2.5 bg-black/40 border border-white/15 text-xs rounded-lg text-white focus:outline-rose-500 resize-none leading-relaxed"
+                    />
+                    <p className="text-[11px] text-slate-400 mt-1 font-light">
+                      {adm.vaultDescHint}
+                    </p>
+                  </div>
+
+                  {/* 2. İpucu / Placeholder */}
+                  <div>
+                    <label className="text-xs font-semibold text-slate-300 block mb-1">
+                      {adm.vaultPlaceholderLabel}
+                    </label>
                     <input
                       type="text"
-                      value={formData.general.musicUrl}
-                      onChange={e => setFormData({ ...formData, general: { ...formData.general, musicUrl: e.target.value } })}
-                      className="w-full p-2.5 bg-black/40 border border-white/15 text-xs rounded-lg text-white font-mono"
+                      value={formData.general.vaultPlaceholder || ""}
+                      onChange={e => setFormData({ ...formData, general: { ...formData.general, vaultPlaceholder: e.target.value } })}
+                      placeholder="Örn: Caffe Greco"
+                      className="w-full p-2.5 bg-black/40 border border-white/15 text-xs rounded-lg text-white focus:outline-rose-500"
                     />
+                  </div>
+
+                  {/* 3. Kasa Şifresi / Cevap */}
+                  <div>
+                    <label className="text-xs font-semibold text-rose-400 block mb-1">
+                      🔑 {adm.vaultPasswordLabel}
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.general.anniversaryPassword || ""}
+                      onChange={e => setFormData({ ...formData, general: { ...formData.general, anniversaryPassword: e.target.value } })}
+                      placeholder={adm.anniversaryPlaceholder || "Örn: Caffe Greco"}
+                      className="w-full p-2.5 bg-rose-500/10 border border-rose-500/30 text-sm rounded-lg text-rose-300 font-bold focus:outline-rose-500"
+                    />
+                    <p className="text-[11px] text-slate-400 mt-1 font-light">
+                      {adm.vaultPasswordHint}
+                    </p>
+                  </div>
+
+                  {/* 4. Admin PIN */}
+                  <div className="pt-2 border-t border-white/10">
+                    <label className="text-xs font-semibold text-slate-300 block mb-1">
+                      🛡️ {adm.adminPinLabel}
+                    </label>
+                    <input
+                      type="text"
+                      maxLength={8}
+                      value={formData.general.secretPin || "0411"}
+                      onChange={e => setFormData({ ...formData, general: { ...formData.general, secretPin: e.target.value } })}
+                      className="w-full sm:w-48 p-2.5 bg-black/40 border border-white/15 text-xs rounded-lg text-white font-mono focus:outline-rose-500"
+                    />
+                    <p className="text-[11px] text-slate-400 mt-1 font-light">
+                      {adm.adminPinHint}
+                    </p>
                   </div>
                 </div>
               )}
