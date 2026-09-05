@@ -9,14 +9,7 @@ import { translations } from './locales/translations'
 import { Heart } from 'lucide-react'
 
 export default function App() {
-  const [story, setStory] = useState(() => {
-    try {
-      const saved = localStorage.getItem('our_universe_story')
-      return saved ? JSON.parse(saved) : initialStory
-    } catch {
-      return initialStory
-    }
-  })
+  const [story, setStory] = useState(initialStory)
   const [isAdminOpen, setIsAdminOpen] = useState(false)
 
   // Language is persisted in story.general.language via Admin Dashboard
@@ -97,14 +90,7 @@ export default function App() {
         isOpen={isAdminOpen}
         onClose={() => setIsAdminOpen(false)}
         story={story}
-        onSaveStory={(updated) => {
-          setStory(updated)
-          try {
-            localStorage.setItem('our_universe_story', JSON.stringify(updated))
-          } catch (e) {
-            console.warn('LocalStorage save failed:', e)
-          }
-        }}
+        onSaveStory={(updated) => setStory(updated)}
       />
     </div>
   )
