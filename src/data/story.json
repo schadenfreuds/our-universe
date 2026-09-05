@@ -1,0 +1,39 @@
+{
+  "general": {
+    "title": "Bizim Evrenimiz",
+    "subtitle": "Yıldızların altında, seninle geçen her saniye...",
+    "partnerName": "Me",
+    "creatorName": "You",
+    "startDate": "2024-09-07T00:00:00",
+    "anniversaryPassword": "0709",
+    "secretPin": "0411",
+    "musicUrl": "/music/background.mp3",
+    "language": "tr"
+  },
+  "memories": [
+    {
+      "id": 1,
+      "date": "2024-09-07",
+      "title": "Her Şeyin Başladığı Gün",
+      "location": "Roma, İtalya",
+      "caption": "İkimizin hikayesinin ilk tohumları burada atıldı. Hayatımın en güzel dönüm noktası.",
+      "photo": ""
+    },
+    {
+      "id": 2,
+      "date": "2025-01-15",
+      "title": "Sıcak Bir Kahve & Sonsuz Sohbet",
+      "location": "Floransa, İtalya",
+      "caption": "Hava ne kadar soğuk olursa olsun ellerin elimdeyken dünya sıcacıktı.",
+      "photo": ""
+    },
+    {
+      "id": 3,
+      "date": "2025-05-20",
+      "title": "Kanal Boyu Akşam Yürüyüşü",
+      "location": "Venedik, İtalya",
+      "caption": "Gün batarken suyun üzerindeki ışıklar ve senin gülüşün... Sonsuza dek unutulmayacak bir an.",
+      "photo": ""
+    }
+  ]
+}
