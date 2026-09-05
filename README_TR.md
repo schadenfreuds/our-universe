@@ -51,7 +51,17 @@ Tarayıcınızda `http://localhost:5173` adresine gidin.
    - Kendi isimlerinizi, hikaye başlığınızı, tanışma tarihinizi ve kilit şifrenizi belirleyin.
 5. **Anı Sandığı** sekmesinde:
    - Fotoğraflarınızı yükleyin, tarihleri, konumları ve anı açıklamalarınızı yazın.
-6. **Kaydet** butonuna basın. Tek bir kod satırına dokunmadan her şey anında güncellenir!
+6. **Güvenlik & Kasa** sekmesinde:
+   - Gizli sorunuzu, ipucunuzu ve kasa kilidi şifrenizi dilediğiniz gibi özelleştirin.
+7. **Kaydet** butonuna basın. Tek bir kod satırına dokunmadan her şey anında güncellenir!
+
+### 📸 Önerilen Fotoğraf Formatı & En-Boy Oranı (Ratio)
+
+Anı kartlarında en kusursuz ve estetik polaroid görünümünü elde etmek için:
+- **Önerilen En-Boy Oranı:** **4:3 (Yatay / Landscape)** veya **1:1 (Kare)**.
+- **Önerilen Çözünürlük:** `1200 x 900 px` veya `1600 x 1200 px` (daha yüksek kamera çözünürlükleri de tam desteklenir).
+- **Desteklenen Formatlar:** JPG, JPEG, PNG, WebP.
+- **Otomatik Tarayıcı İçi Sıkıştırma:** Fotoğrafları elle kırpıp küçültmeniz gerekmez! Dahili canvas sıkıştırıcı, telefondan yüklenen 10+ MB'lık fotoğrafları gözle görülür kalite kaybı olmadan ~200 KB 2K Retina boyutuna otomatik optimize eder.
 
 ### 2. Doğrudan Dosyadan (`src/data/story.json`):
 Tüm veriler `src/data/story.json` içinde temiz bir JSON formatında saklanır.

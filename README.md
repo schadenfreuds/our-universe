@@ -53,7 +53,17 @@ Open `http://localhost:5173` in your browser.
    - Change your names, story title, anniversary date, and unlock password.
 5. In the **Memory Vault** tab:
    - Upload your couple photos, set dates, locations, and romantic captions.
-6. Hit **Save & Update**. Everything updates instantly without touching code!
+6. In the **Security & Vault** tab:
+   - Customize your secret unlock question, hint placeholder, and vault password.
+7. Hit **Save & Update**. Everything updates instantly without touching code!
+
+### 📸 Recommended Photo Guidelines & Aspect Ratio
+
+To achieve the cleanest, most aesthetic polaroid look on your memory cards:
+- **Recommended Aspect Ratio:** **4:3 (Landscape / Horizontal)** or **1:1 (Square)**.
+- **Recommended Resolution:** `1200 x 900 px` or `1600 x 1200 px` (higher camera resolutions are fully supported).
+- **Supported Formats:** JPG, JPEG, PNG, WebP.
+- **Automatic In-Browser Compression:** You never need to manually crop or resize high-res phone pictures! The integrated canvas compressor automatically downscales 10+ MB photos to crisp 1800px 2K Retina images (~200 KB) right in your browser with zero quality loss.
 
 ### Option B: Direct Config (`src/data/story.json`)
 All story metadata, dates, and memories are cleanly stored in `src/data/story.json`:

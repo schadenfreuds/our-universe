@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { X, Save, Download, Plus, Trash2, Upload, Key, Image as ImageIcon, Settings, Shield, Lock } from 'lucide-react'
+import { X, Save, Download, Plus, Trash2, Upload, Key, Image as ImageIcon, Settings, Shield, Lock, Sparkles } from 'lucide-react'
 import { translations } from '../locales/translations'
 
 export default function AdminDashboard({ isOpen, onClose, story, onSaveStory }) {
@@ -389,6 +389,22 @@ export default function AdminDashboard({ isOpen, onClose, story, onSaveStory }) 
               {/* TAB: MEMORIES */}
               {activeTab === 'memories' && (
                 <div className="space-y-4">
+                  {/* Aspect Ratio & Upload Guide Banner */}
+                  <div className="bg-rose-500/10 border border-rose-500/20 rounded-xl p-3 flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-2.5 text-rose-300">
+                      <Sparkles size={18} className="text-rose-400 shrink-0" />
+                      <div>
+                        <span className="font-bold block text-white">{adm.ratioTitle}</span>
+                        <p className="text-[11px] text-slate-400 font-light mt-0.5 leading-relaxed">
+                          {adm.ratioDesc}
+                        </p>
+                      </div>
+                    </div>
+                    <span className="shrink-0 hidden sm:inline-block px-2.5 py-1 bg-white/10 rounded-lg text-[10px] font-mono font-bold text-rose-300 border border-white/10">
+                      4:3 / 1:1
+                    </span>
+                  </div>
+
                   {formData.memories?.map((m, mIndex) => (
                     <div key={m.id || mIndex} className="bg-white/5 p-4 border border-white/10 rounded-xl relative">
                       <div className="flex justify-between items-center mb-2.5 border-b border-white/10 pb-1.5">
@@ -400,22 +416,27 @@ export default function AdminDashboard({ isOpen, onClose, story, onSaveStory }) 
 
                       <div className="flex flex-col sm:flex-row gap-4 items-start">
                         {/* Upload Preview */}
-                        <div className="w-28 h-28 shrink-0 bg-black/40 border border-white/15 rounded-xl overflow-hidden flex flex-col items-center justify-center relative group">
-                          {m.photo ? (
-                            <img src={m.photo} alt={m.title} className="w-full h-full object-cover" />
-                          ) : (
-                            <ImageIcon size={28} className="text-slate-500" />
-                          )}
-                          <label className="absolute inset-0 bg-black/70 text-white text-[11px] font-semibold flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
-                            <Upload size={16} className="mb-1" />
-                            <span>{uploading ? adm.uploading : adm.choosePhoto}</span>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              onChange={e => handleFileUpload(e, mIndex)}
-                            />
-                          </label>
+                        <div className="flex flex-col items-center shrink-0">
+                          <div className="w-28 h-28 bg-black/40 border border-white/15 rounded-xl overflow-hidden flex flex-col items-center justify-center relative group">
+                            {m.photo ? (
+                              <img src={m.photo} alt={m.title} className="w-full h-full object-cover" />
+                            ) : (
+                              <ImageIcon size={28} className="text-slate-500" />
+                            )}
+                            <label className="absolute inset-0 bg-black/70 text-white text-[11px] font-semibold flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                              <Upload size={16} className="mb-1" />
+                              <span>{uploading ? adm.uploading : adm.choosePhoto}</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={e => handleFileUpload(e, mIndex)}
+                              />
+                            </label>
+                          </div>
+                          <span className="text-[10px] text-rose-400/90 mt-1 font-medium font-mono">
+                            {adm.recommendedRatio || "4:3 önerilir"}
+                          </span>
                         </div>
 
                         {/* Fields */}
